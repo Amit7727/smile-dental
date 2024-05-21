@@ -1,7 +1,7 @@
 const express = require('express')
 const smileRouter = express.Router()
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'uploads/', limits: { fieldSize: 25 * 1024 * 1024 } });
 const logger = require('winston').loggers.get('app')
 const loginUserService = require('../service/loginUserService')
 const registerUserService = require('../service/registerUserService')
@@ -60,7 +60,7 @@ smileRouter.post('/register',async (req, res) => {
 })
 
 // Create Carousel
-smileRouter.post('/carousel', async (req, res) => {
+smileRouter.post('/carousel',upload.none(), async (req, res) => {
     await createCarouselService(req, res)
 })
 
@@ -69,7 +69,7 @@ smileRouter.get('/carousel', async (req, res) => {
     await getCarouselService(req, res)
 })
 
-smileRouter.put('/carousel/:id', async (req, res) => {
+smileRouter.put('/carousel/:id',upload.none(), async (req, res) => {
     await updateCarouselService(req, res)
 }) 
 
@@ -92,7 +92,7 @@ smileRouter.get('/about_us', async (req, res) => {
     await getAboutUsService(req, res)
 })
 
-smileRouter.put('/about_us/:id', async (req, res) => {
+smileRouter.put('/about_us/:id',upload.none(), async (req, res) => {
     await updateAboutUsService(req, res)
 })
 
@@ -101,7 +101,7 @@ smileRouter.get('/testimonials', async (req, res) => {
     await getTestmonialsService(req, res)
 })
 
-smileRouter.put('/testimonials/:id', async (req, res) => {
+smileRouter.put('/testimonials/:id',upload.none(), async (req, res) => {
     await updateTestmonialsService(req, res)
 })
 
@@ -118,7 +118,7 @@ smileRouter.get('/our_services', async (req, res) => {
     await getOurServiceService(req, res)
 })
 
-smileRouter.put('/our_services/:id', async (req, res) => {
+smileRouter.put('/our_services/:id',upload.none(), async (req, res) => {
     await updateOurServiceService(req, res)
 })
 
@@ -127,11 +127,11 @@ smileRouter.get('/blogs', async (req, res) => {
     await getBlogsService(req, res)
 })
 
-smileRouter.put('/blogs/:id', async (req, res) => {
+smileRouter.put('/blogs/:id',upload.none(), async (req, res) => {
     await updateBlogsService(req, res)
 })
 
-smileRouter.post('/blogs', async (req, res) => {
+smileRouter.post('/blogs',upload.none(), async (req, res) => {
     await createBlogsService(req, res)
 })
 
@@ -153,7 +153,7 @@ smileRouter.get('/headers', async (req, res) => {
     await getHeadersService(req, res)
 })
 
-smileRouter.put('/headers/:id', async (req, res) => {
+smileRouter.put('/headers/:id',upload.none(), async (req, res) => {
     await updateHeadersService(req, res)
 })
 
@@ -162,7 +162,7 @@ smileRouter.get('/footer', async (req, res) => {
     await getFooterService(req, res)
 })
 
-smileRouter.put('/footer/:id', async (req, res) => {
+smileRouter.put('/footer/:id',upload.none(), async (req, res) => {
     await updateFooterService(req, res)
 })
 
@@ -192,7 +192,7 @@ smileRouter.get('/about_us/personal_information', async (req, res) => {
     await getAboutUsPersonalInformationService(req, res)
 })
 
-smileRouter.put('/about_us/personal_information/:id', async (req, res) => {
+smileRouter.put('/about_us/personal_information/:id',upload.none(), async (req, res) => {
     await updateAboutUsPersonalInformationService(req, res)
 })
 
@@ -210,7 +210,7 @@ smileRouter.get('/cards/:page_name', async (req, res) => {
     await getCardsByPageName(req, res)
 })
 
-smileRouter.put('/cards/:id', async (req, res) => {
+smileRouter.put('/cards/:id',upload.none(), async (req, res) => {
     await updateCardsService(req, res)
 })
 
