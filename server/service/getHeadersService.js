@@ -1,4 +1,5 @@
 const { pool } = require('../model/connection')
+const { convertGetHeaderResponse } = require('../helper/responseConverter')
 
 module.exports = async (req, res) => {
     const query = 'SELECT * FROM headers'
@@ -6,7 +7,8 @@ module.exports = async (req, res) => {
         if (err) {
             res.status(500).json({ error: err })
         } else {
-            return res.status(200).json(result)
+            const convertedResponse = convertGetHeaderResponse(result)
+            return res.status(200).json(convertedResponse)
         }
     })
 }

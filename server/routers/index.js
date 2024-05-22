@@ -41,6 +41,8 @@ const updateAwardsInformationService = require('../service/updateAwardsInformati
 const getCardsByPageName = require('../service/getCardsByPageName')
 const updateCardsService = require('../service/updateCardsService')
 const getHomePageCardsService = require('../service/getHomePageCardsService')
+const getMakeAppointmentService = require('../service/getMakeAppointmentService')
+const updateMakeAppointmentService = require('../service/updateMakeAppointmentService')
 
 
 // demo
@@ -216,6 +218,14 @@ smileRouter.put('/cards/:id',upload.none(), async (req, res) => {
 
 smileRouter.get('/homepage_cards', async (req, res) => {
     await getHomePageCardsService(req, res)
+})
+
+smileRouter.get('/make_appointment', async (req, res) => {
+    await getMakeAppointmentService(req, res)
+})
+
+smileRouter.put('/make_appointment/:id',upload.none(), async (req, res) => {
+    await updateMakeAppointmentService(req, res)
 })
 
 module.exports = smileRouter

@@ -6,6 +6,9 @@ const upload = multer({ dest: 'uploads/' }); // Multer middleware for handling m
 function uploadImageS3(req, res) {
     return new Promise((resolve, reject) => {
         const { image } = req.body;
+        if(image.startsWith('https://')) {
+            return resolve(image);
+        }
         // Remove the header (data:image/jpeg;base64,)
         const base64Data = image.replace(/^data:image\/\w+;base64,/, '');
       
