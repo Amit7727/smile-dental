@@ -3,14 +3,14 @@ const AWS = require('aws-sdk');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Multer middleware for handling multipart/form-data
 
-function uploadImageS3(req, res) {
+function uploadSecondImageS3(req, res) {
     return new Promise((resolve, reject) => {
-        const { image } = req.body;
-        if(image.startsWith('https://')) {
-            return resolve(image);
+        const { image1 } = req.body;
+        if(image1.startsWith('https://')) {
+            return resolve(image1);
         }
         // Remove the header (data:image/jpeg;base64,)
-        const base64Data = image.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = image1.replace(/^data:image\/\w+;base64,/, '');
       
         // Create a buffer from the base64 string
         const imageBuffer = Buffer.from(base64Data, 'base64');
@@ -26,7 +26,7 @@ function uploadImageS3(req, res) {
     
         const params = {
           Bucket: 'smile-dental-buckett',
-          Key: `smile-dental-imags/${fileName}`,
+          Key: `images/${fileName}`,
           Body: imageBuffer, 
           ContentType: 'image/jpeg',
           Metadata: {
@@ -38,7 +38,7 @@ function uploadImageS3(req, res) {
         s3.upload(params, (err, data) => {
           if (err) {
             console.error(err);
-            reject('Error uploading file to S3.');
+            reject('Error while uploading 2nd file to S3.');
           } else {
             resolve(data.Location);
           }
@@ -46,4 +46,4 @@ function uploadImageS3(req, res) {
     });
 }
 
-module.exports = { uploadImageS3 };
+module.exports = { uploadSecondImageS3 };

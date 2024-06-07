@@ -1,8 +1,11 @@
 const { pool } = require('../model/connection')
 const { uploadImageS3 } = require('../helper/aws/uploadImageS3')
+const { validateCreateUpdateBlog } = require('../helper/fieldValidation')
 
 
 module.exports = async (req, res) => {
+    const err = validateCreateUpdateBlog(req, res)
+    if (err.length > 0) return res.status(400).json({ error: err })
     uploadImageS3(req, res)
         .then(location => {
             console.log('File uploaded to:', location);

@@ -1,4 +1,5 @@
 const { pool } = require('../model/connection')
+const bycrypt = require('bcrypt')
 
 module.exports = async (req, res) => {
     const { email, password } = req.body
@@ -9,7 +10,7 @@ module.exports = async (req, res) => {
         } else if (result.length === 0) {
             return res.status(401).json({ message: 'Invalid credentials' })
         }
-        if (result[0].password !== password) {
+        if (!(await bycrypt.compare(password, result[0].password))) {
             return res.status(401).json({ message: 'Invalid credentials' })
         }
         return res.status(200).json({ message: 'Login successful' })

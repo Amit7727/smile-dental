@@ -1,9 +1,12 @@
 const { pool } = require('../model/connection')
 const getUpdatedTime = require('../helper/getUpdatedTime')
+const { validateUpdateMetaData } = require('../helper/fieldValidation')
 
 // update meta data by id. page_name, meta_title, meta_description, updated_at
 
 module.exports = async (req, res) => {
+    const err = validateUpdateMetaData(req, res)
+    if (err.length > 0) return res.status(400).json({ error: err })
     const id = req.params.id
     const { page_name, meta_title, meta_description } = req.body
     const updated_at = getUpdatedTime()
