@@ -1,20 +1,20 @@
 const nodemailer = require('nodemailer');
 
-async function sendEmail(html, to, subject) {
+function sendEmail(html, to, subject) {
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
         secure: false,
         auth: {
-            user: 'smilecloudfamilydental@gmail.com',
-            pass: 'limd jogj gifm mmnx',
+            user: process.env.SEND_MAIL_AUTH_USER,
+            pass: process.env.SEND_MAIL_AUTH_PASS,
         },
     });
 
     // Define the email options
     const mailOptions = {
-        from: 'smilecloudfamilydental@gmail.com',
+        from: process.env.SEND_MAIL_AUTH_FROM,
         to,
         subject,
         html
@@ -22,7 +22,7 @@ async function sendEmail(html, to, subject) {
 
     // Send the email
     try {
-        await transporter.sendMail(mailOptions);
+        transporter.sendMail(mailOptions);
         console.log('Email sent successfully');
     } catch (error) {
         console.dir(error);

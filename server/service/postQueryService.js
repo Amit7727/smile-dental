@@ -124,10 +124,9 @@ module.exports = async (req, res) => {
             
             </html>
         `
-        // const to = "info@smilecloudfamilydental.com"
-        const to = "cheenujangir93@gmail.com"
+        const to = process.env.SEND_MAIL_TO  ||  "info@smilecloudfamilydental.com"
         const subject = 'A query has been submitted by ' + req.body.name
-            sendEmail(`<h1>Contact Us Request Data</h1>
+            sendEmail(`<h1>Query submitted</h1>
             <p>${body}</p>`, to, subject)
             return res.status(200).json({ message: 'Query submitted successfully' })
         }
